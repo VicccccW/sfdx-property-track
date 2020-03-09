@@ -152,23 +152,22 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Private</externalSharingModel>
-    <label>Property</label>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <label>Auction</label>
     <nameField>
-        <displayFormat>PRPT-{00000}</displayFormat>
-        <label>Property Number</label>
+        <displayFormat>AUCT-{0}</displayFormat>
+        <label>Auction Name</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Properties</pluralLabel>
+    <pluralLabel>Auction</pluralLabel>
     <searchLayouts>
-        <searchResultsAdditionalFields>Name__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>No_of_Bathrooms__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>No_of_Rooms__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Land_Size__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Property__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Auction_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Auction_Start_Price__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Auction_Final_Price__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Has_Sold__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Sold_Price__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

@@ -10,9 +10,9 @@
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>Property Management</label>
     <navType>Standard</navType>
-    <tabs>standard-AppLauncher</tabs>
     <tabs>standard-home</tabs>
     <tabs>Property__c</tabs>
+    <tabs>Auction__c</tabs>
     <tabs>standard-Feed</tabs>
     <tabs>standard-File</tabs>
     <tabs>standard-DeleteEvent</tabs>

@@ -5,6 +5,9 @@
         "paths": {
             "c/propertySearch": [
                 "propertySearch/propertySearch.js"
+            ],
+            "c/dataImportButton": [
+                "dataImportButton/dataImportButton.js"
             ]
         }
     },

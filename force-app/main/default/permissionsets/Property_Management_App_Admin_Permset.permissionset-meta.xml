@@ -102,4 +102,8 @@
         <tab>Property__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+        <tabSettings>
+        <tab>Scratch_Org_Config</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

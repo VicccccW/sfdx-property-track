@@ -58,9 +58,9 @@ public with sharing class SystemConfigController {
 
     //in order for LWC to return custom defined apex, declare each property with @AuraEnabled
     public class SystemConfigField {
-        @AuraEnabled public String fieldName;
-        @AuraEnabled public String fieldLabel;
-        @AuraEnabled public String fieldValue;
+        @AuraEnabled public String name;
+        @AuraEnabled public String label;
+        @AuraEnabled public String value;
         @AuraEnabled public Boolean isCustom;
 
         public SystemConfigField() {
@@ -68,10 +68,10 @@ public with sharing class SystemConfigController {
         }
         
         //implement custom constructor
-        public SystemConfigField(String fieldName, String fieldLabel, String fieldValue, Boolean isCustom) {
-            this.fieldName = fieldName;
-            this.fieldLabel = fieldLabel;
-            this.fieldValue = fieldValue;
+        public SystemConfigField(String name, String label, String value, Boolean isCustom) {
+            this.name = name;
+            this.label = label;
+            this.value = value;
             this.isCustom = isCustom;
         }
     }

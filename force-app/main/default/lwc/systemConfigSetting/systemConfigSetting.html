@@ -25,17 +25,23 @@
         <div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_x-small slds-m-horizontal_none">
           <lightning-layout multiple-rows>
 
-            <!-- render list in below layout item-->
+            <!-- render fields list in below layout item -->
             <lightning-layout-item size="12" padding="horizontal-medium">
-              <!-- iterate the list -->
+              <!-- iterate fields list -->
               <template for:each={customFields} for:item="field">
-                <lightning-layout key={field.fieldName}>
-                  <!-- each nested layout item has a nest layout with 2 column, left one is field label, right one is field value (input field) -->
-                  <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">1</div>
+                <lightning-layout key={field.name}>
+                  <!-- each nested layout item has another nest layout with 2 column, left one is field label, right one is field value (input field) -->
+                  <lightning-layout-item size="6" flexibility="auto" padding="horizontal-medium">
+                    <div class="custom-box slds-box_x-small slds-text-align_right">{field.label}</div>
                   </lightning-layout-item>
-                  <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">2</div>
+                  <lightning-layout-item size="6" flexibility="auto" padding="horizontal-medium">
+                    <div class="custom-box slds-box_x-small slds-text-align_left">
+                      <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                          <input type="text" disabled class="slds-input" value={field.value}/>
+                        </div>
+                      </div>
+                    </div>
                   </lightning-layout-item>
   
                 </lightning-layout>
@@ -46,11 +52,31 @@
             <lightning-layout-item size="12" padding="around-small">
               <lightning-layout>
 
-                <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-                  <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">button 1</div>
+                <!-- placeholder layout item 1 -->
+                <lightning-layout-item size="3" flexibility="auto" padding="horizontal-medium">
                 </lightning-layout-item>
-                <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-                  <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">button 2</div>
+
+                <lightning-layout-item size="3" flexibility="auto" padding="horizontal-medium">
+                  <div class="slds-text-align_center">
+                    <button 
+                      class="slds-button slds-button_brand"
+                      name="Edit"
+                      onclick={handleEdit}>Edit
+                    </button>
+                  </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" flexibility="auto" padding="horizontal-medium">
+                  <div class="slds-text-align_center">
+                    <button 
+                      class="slds-button slds-button_brand"
+                      name="Save"
+                      onclick={handleSave}>Save
+                    </button>                  
+                  </div>
+                </lightning-layout-item>
+
+                <!-- placeholder layout item 2 -->
+                <lightning-layout-item size="3" flexibility="auto" padding="horizontal-medium">
                 </lightning-layout-item>
 
               </lightning-layout>

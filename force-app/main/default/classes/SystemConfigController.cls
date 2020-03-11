@@ -1,12 +1,7 @@
 public with sharing class SystemConfigController {
-    
-    private List<SystemConfigField> systemConfigFields;
-    
-    public SystemConfigController() {
-        buildSystemConfigFields();
-    }
 
-    private void buildSystemConfigFields() {
+    @AuraEnabled(cacheable=true)
+    public static List<SystemConfigField> getSystemConfigFields() {
         //https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_dynamic_field_tokens.htm?search_text=getMap()
         //key(String) is the field names
         //value(Schema.SObjectField) is the field tokens
@@ -16,7 +11,7 @@ public with sharing class SystemConfigController {
         //get custom setting org default value first in advance
         System_Config__c orgDefaultSetting = System_Config__c.getOrgDefaults();
         
-        systemConfigFields = new List<SystemConfigField>();
+        List<SystemConfigField> systemConfigFields = new List<SystemConfigField>();
 
         for (String field : fieldsMap.keySet()) {
             //get one field token
@@ -31,25 +26,63 @@ public with sharing class SystemConfigController {
             systemConfigFields.add(new SystemConfigField(
                 fieldResult.getName(), 
                 fieldResult.getLabel(), 
-                String.valueOf(orgDefaultSetting.get(fieldResult.getName()))
+                String.valueOf(orgDefaultSetting.get(fieldResult.getName())),
+                fieldResult.isCustom()
                 ));
+        }
+
+        return systemConfigFields;
+    }
+
+    @AuraEnabled
+    public static SystemConfigControllerResponse setSystemConfigFields(String newSysConfigStr) {
+        System.debug('Received newSysConfigStr is ' + newSysConfigStr);
+
+        System_Config__c newValue = (System_Config__c)System.JSON.deserialize(newSysConfigStr, System_Config__c.class);
+
+        Database.SaveResult result = Database.update(newValue);
+
+        if(result.isSuccess()) {
+            System.debug('Success ');
+            return new SystemConfigControllerResponse('Success', null);
+        } else {
+            List<String> errorMessages = new List<String>();
+
+            for(Database.Error err : result.getErrors()) {
+                errorMessages.add(err.getStatusCode() + ': ' + err.getMessage());
+            }
+
+            return new SystemConfigControllerResponse('Error', errorMessages);
         }
     }
 
+    //in order for LWC to return custom defined apex, declare each property with @AuraEnabled
     public class SystemConfigField {
-        String fieldName;
-        String fieldLabel;
-        String fieldValue;
+        @AuraEnabled public String fieldName;
+        @AuraEnabled public String fieldLabel;
+        @AuraEnabled public String fieldValue;
+        @AuraEnabled public Boolean isCustom;
 
         public SystemConfigField() {
 
         }
         
         //implement custom constructor
-        public SystemConfigField(String fieldName, String fieldLabel, String fieldValue) {
+        public SystemConfigField(String fieldName, String fieldLabel, String fieldValue, Boolean isCustom) {
             this.fieldName = fieldName;
             this.fieldLabel = fieldLabel;
             this.fieldValue = fieldValue;
+            this.isCustom = isCustom;
+        }
+    }
+
+    public class SystemConfigControllerResponse {
+        @AuraEnabled public String status;
+        @AuraEnabled public List<String> messages;
+
+        public SystemConfigControllerResponse(String status, List<String> messages) {
+            this.status = status;
+            this.messages = messages;
         }
     }
 }

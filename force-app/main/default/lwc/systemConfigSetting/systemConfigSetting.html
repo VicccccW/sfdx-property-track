@@ -17,56 +17,52 @@
       </header>
     </div>
     <div class="slds-card__body slds-card__body_inner">
-      <!-- dynamic render all/custom fields label and value in the lwc -->
-      <!-- when render, the value input field is read only  -->
-      <!-- have a edit button and a save button (disabled by default) -->
-      <!-- when click edit, all field input become editable, as well as the save button, but the edit button become disabled -->
-      <div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_x-small slds-m-horizontal_none">
-        <lightning-layout multiple-rows>
+      <template if:true={hasCustomFields}>
+        <!-- dynamic render all/custom fields label and value in the lwc -->
+        <!-- when render, the value input field is read only  -->
+        <!-- have a edit button and a save button (disabled by default) -->
+        <!-- when click edit, all field input become editable, as well as the save button, but the edit button become disabled -->
+        <div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_x-small slds-m-horizontal_none">
+          <lightning-layout multiple-rows>
 
-          <!-- each layout item has a nest layout with 2 column, left one is field label, right one is field value (input field) -->
-          <lightning-layout-item size="12" padding="horizontal-medium">
-            <lightning-layout>
+            <!-- render list in below layout item-->
+            <lightning-layout-item size="12" padding="horizontal-medium">
+              <!-- iterate the list -->
+              <template for:each={customFields} for:item="field">
+                <lightning-layout key={field.fieldName}>
+                  <!-- each nested layout item has a nest layout with 2 column, left one is field label, right one is field value (input field) -->
+                  <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">1</div>
+                  </lightning-layout-item>
+                  <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">2</div>
+                  </lightning-layout-item>
+  
+                </lightning-layout>
+              </template>
+            </lightning-layout-item>
 
-              <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-                <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">1</div>
-              </lightning-layout-item>
-              <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-                <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">2</div>
-              </lightning-layout-item>
+            <!-- implement two button before layout end -->
+            <lightning-layout-item size="12" padding="around-small">
+              <lightning-layout>
 
-            </lightning-layout>
-          </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                  <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">button 1</div>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                  <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">button 2</div>
+                </lightning-layout-item>
 
-          <lightning-layout-item size="12" padding="horizontal-medium">
-            <lightning-layout>
+              </lightning-layout>
+            </lightning-layout-item>
 
-              <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-                <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">1</div>
-              </lightning-layout-item>
-              <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-                <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">2</div>
-              </lightning-layout-item>
+          </lightning-layout>
+        </div>
+      </template>
 
-            </lightning-layout>
-          </lightning-layout-item>
-
-          <!-- implement two button before layout end -->
-          <lightning-layout-item size="12" padding="around-small">
-            <lightning-layout>
-
-              <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-                <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">button 1</div>
-              </lightning-layout-item>
-              <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-                <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">button 2</div>
-              </lightning-layout-item>
-
-            </lightning-layout>
-          </lightning-layout-item>
-
-        </lightning-layout>
-      </div>
+      <template if:false={hasCustomFields}>
+        <!-- display an message to say no custom setting custom field value availble -->
+      </template>
     </div>
   </article>
 </template>

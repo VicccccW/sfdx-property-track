@@ -74,6 +74,7 @@ public with sharing class GlobalUtility {
 
     /**
      * hack method to get sessionId to use in LWC call SF API
+     * https://salesforce.stackexchange.com/questions/110515/getting-session-id-in-lightning
      */
     public static String getSessionIdFromVFPage(PageReference visualforcePage){
         String content = visualforcePage.getContent().toString();

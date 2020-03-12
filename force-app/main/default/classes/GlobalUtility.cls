@@ -71,4 +71,14 @@ public with sharing class GlobalUtility {
         
         return retList;
     }
+
+    /**
+     * hack method to get sessionId to use in LWC call SF API
+     */
+    public static String getSessionIdFromVFPage(PageReference visualforcePage){
+        String content = visualforcePage.getContent().toString();
+        Integer s = content.indexOf('Start_Of_Session_Id') + 'Start_Of_Session_Id'.length(),
+                e = content.indexOf('End_Of_Session_Id');
+        return content.substring(s, e);
+    }
 }

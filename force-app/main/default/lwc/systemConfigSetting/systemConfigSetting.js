@@ -1,6 +1,7 @@
 import { LightningElement, wire, track } from 'lwc';
 import getSystemConfigFields from '@salesforce/apex/SystemConfigController.getSystemConfigFields';
 import setSystemConfigFields from '@salesforce/apex/SystemConfigController.setSystemConfigFields';
+import createRemoteSiteSettings from '@salesforce/apex/RemoteSiteSettingController.createRemoteSiteSettings';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { reduceErrors } from 'c/idsUtils';
 
@@ -52,7 +53,7 @@ export default class systemConfigSetting extends LightningElement {
         element.removeAttribute("disabled", null);
       }
 
-      this.template.querySelectorAll("[name='fieldValueInput']").forEach(element => {
+      this.template.querySelectorAll("input[name='fieldValueInput']").forEach(element => {
         element.removeAttribute("disabled", null)
       });
 
@@ -67,7 +68,7 @@ export default class systemConfigSetting extends LightningElement {
         element.setAttribute("disabled", null);
       }
 
-      this.template.querySelectorAll("[name='fieldValueInput']").forEach(element => {
+      this.template.querySelectorAll("input[name='fieldValueInput']").forEach(element => {
         element.setAttribute("disabled", null)
       });
 
@@ -75,7 +76,7 @@ export default class systemConfigSetting extends LightningElement {
 
     this.buildNewSysConfigStr();
 
-    setSystemConfigFields({ newSysConfigStr: this.newSysConfigStr })
+    setSystemConfigFields({ newSysConfigStr : this.newSysConfigStr })
       .then(result => {
         if (result.status === 'Success') {
           this.dispatchEvent(
@@ -104,6 +105,17 @@ export default class systemConfigSetting extends LightningElement {
           })
         );
       });
+
+      const remoteSiteUrl = this.template.querySelector("input[title='Property_Backup_Endpoint__c']").value;
+
+      createRemoteSiteSettings({ siteUrl : remoteSiteUrl})
+      .then(result => {
+        console.log("Updated remote site.");
+        console.log(result);
+      })
+      .catch(error => {
+        console.log("Error when create remote site.");
+      })
   }
 
   buildNewSysConfigStr() {

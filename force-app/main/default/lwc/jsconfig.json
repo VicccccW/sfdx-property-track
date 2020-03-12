@@ -11,6 +11,12 @@
             ],
             "c/systemConfigSetting": [
                 "systemConfigSetting/systemConfigSetting.js"
+            ],
+            "c/idsUtils": [
+                "idsUtils/idsUtils.js"
+            ],
+            "c/pubsub": [
+                "pubsub/pubsub.js"
             ]
         }
     },

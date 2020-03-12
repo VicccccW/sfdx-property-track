@@ -36,6 +36,8 @@ public with sharing class SystemConfigController {
 
     @AuraEnabled
     public static SystemConfigControllerResponse setSystemConfigFields(String newSysConfigStr) {
+        
+        //format should be '{"Id": "a02N000000JJJ8dIAH", "Property_Backup_Scan_Range_Days__c": "10"}'
         System.debug('Received newSysConfigStr is ' + newSysConfigStr);
 
         System_Config__c newValue = (System_Config__c)System.JSON.deserialize(newSysConfigStr, System_Config__c.class);

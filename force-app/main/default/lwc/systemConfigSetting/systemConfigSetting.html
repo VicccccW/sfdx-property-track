@@ -38,7 +38,7 @@
                     <div class="custom-box slds-box_x-small slds-text-align_left">
                       <div class="slds-form-element">
                         <div class="slds-form-element__control">
-                          <input type="text" disabled class="slds-input" value={field.value}/>
+                          <input type="text" name="fieldValueInput" title={field.name} class="slds-input" value={field.value} disabled/>
                         </div>
                       </div>
                     </div>
@@ -58,19 +58,13 @@
 
                 <lightning-layout-item size="3" flexibility="auto" padding="horizontal-medium">
                   <div class="slds-text-align_center">
-                    <button 
-                      class="slds-button slds-button_brand"
-                      name="Edit"
-                      onclick={handleEdit}>Edit
+                    <button class="slds-button slds-button_brand" name="EditBtn" onclick={handleEdit}>Edit
                     </button>
                   </div>
                 </lightning-layout-item>
                 <lightning-layout-item size="3" flexibility="auto" padding="horizontal-medium">
                   <div class="slds-text-align_center">
-                    <button 
-                      class="slds-button slds-button_brand"
-                      name="Save"
-                      onclick={handleSave}>Save
+                    <button class="slds-button slds-button_brand" name="SaveBtn" onclick={handleSave} disabled>Save
                     </button>                  
                   </div>
                 </lightning-layout-item>

@@ -3,17 +3,15 @@
  * This class retrieves and stringfy data, send it to an end point (POST)
  * This class will be implmented in a Scheduled Class
  */
-global without sharing class BackupProperty {
-
-    public static BackupPropertyWrapper backupPropertyWrapper;
+global without sharing class PropertyController {
 
     public static void sendBackupRequest() {
-        getProperties();
-        requestBuilder();
+        BackupPropertyWrapper data = getBackupData();
+        sendBackupPostRequest(data);
     }
 
-    private static void getProperties() {
-        backupPropertyWrapper = new BackupPropertyWrapper();
+    private static BackupPropertyWrapper getBackupData() {
+        BackupPropertyWrapper backupPropertyWrapper = new BackupPropertyWrapper();
 
         Integer scanDateRange = GlobalConstants.systemConfig.Property_Backup_Scan_Range_Days__c != null 
                                 ? Integer.valueOf(GlobalConstants.systemConfig.Property_Backup_Scan_Range_Days__c)
@@ -45,11 +43,13 @@ global without sharing class BackupProperty {
 
                     backupPropertyWrapper.properties = Database.query(propertySoql);
         }
+
+        return backupPropertyWrapper;
     }
 
     //create http request and sent the request
-    private static void requestBuilder() {
-        if(backupPropertyWrapper == null) return; 
+    private static void sendBackupPostRequest(BackupPropertyWrapper backupPropertyWrapper) {
+        if(backupPropertyWrapper.properties == null || backupPropertyWrapper.properties.size() == 0) return; 
 
         String requestBody = JSON.serialize(backupPropertyWrapper);
 
@@ -70,6 +70,11 @@ global without sharing class BackupProperty {
             System.debug(response.getBody());
         }
     }
+
+    // public static void sendImportRequest() {
+        
+    // }
+
 
     //data structure to return 
     public class BackupPropertyWrapper {

@@ -5,6 +5,6 @@ public class Queueable_BackupProperty implements Queueable, Database.AllowsCallo
     }
 
     public void execute(QueueableContext context) {
-        BackupProperty.sendBackupRequest();
+        PropertyController.sendBackupRequest();
     }
 }

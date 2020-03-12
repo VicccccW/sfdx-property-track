@@ -6,10 +6,6 @@
         <visible>false</visible>
     </applicationVisibilities>
     <classAccesses>
-        <apexClass>BackupProperty</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>GenericResponse</apexClass>
         <enabled>false</enabled>
     </classAccesses>

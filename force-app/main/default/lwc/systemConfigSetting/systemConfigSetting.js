@@ -82,14 +82,14 @@ export default class systemConfigSetting extends LightningElement {
           this.dispatchEvent(
             new ShowToastEvent({
               title: 'Success',
-              message: 'Update SystemConifg setting Successlly!',
+              message: 'Update SystemConfig setting Successlly!',
               variant: 'success'
             })
           );
         } else if (result.status === 'Error') {
           this.dispatchEvent(
             new ShowToastEvent({
-              title: 'Error updating SystemConifg setting.',
+              title: 'Error updating SystemConfig setting.',
               message: result.messages.join(', '),
               variant: 'error'
             })
@@ -99,7 +99,7 @@ export default class systemConfigSetting extends LightningElement {
       .catch(error => {
         this.dispatchEvent(
           new ShowToastEvent({
-            title: 'Error updating SystemConifg setting.',
+            title: 'Error updating SystemConfig setting.',
             message: reduceErrors(error).join(', '),
             variant: 'error'
           })

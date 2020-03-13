@@ -4,7 +4,7 @@ public class RemoteSiteSettingController {
   public static boolean createRemoteSiteSettings(String siteUrl){
     boolean isSucessful = false;
 
-        if(String.isBlank(siteUrl)) return isSucessful;
+        if (String.isBlank(siteUrl)) return isSucessful;
 
           Map<string, string> RemoteSiteMap = new Map<string, string>();
           
@@ -23,13 +23,13 @@ public class RemoteSiteSettingController {
               allMetadataList.add(remoteSiteDetails);
           }  
 
-          if(allMetadataList.size() > 0){
+          if (allMetadataList.size() > 0){
               system.debug('****RemoteSiteSettings allMetadataList: ' + allMetadataList);
               MetadataService.MetadataPort service = createService();
               List<MetadataService.UpsertResult> results = service.upsertMetadata(allMetadataList);
               
               for(MetadataService.UpsertResult result : results){
-                  if(result.success){
+                  if (result.success){
                       system.debug('added remote site setting success = ' + result);
                       isSucessful = true;
                   } else {

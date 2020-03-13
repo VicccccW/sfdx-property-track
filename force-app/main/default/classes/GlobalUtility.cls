@@ -28,21 +28,21 @@ public with sharing class GlobalUtility {
     public static Boolean isTriggerDisabled(String objType){
         Boolean isDisabled = false;
 
-        if(String.isNotBlank(objType)){
+        if (String.isNotBlank(objType)){
             System_Switch__c custSettings = GlobalConstants.systemSwitch;
             
-            if(custSettings != null){
+            if (custSettings != null){
                 String objsDisabled = custSettings.ObjectTriggersToBeDisabled__c != null 
                                     ? custSettings.ObjectTriggersToBeDisabled__c.trim() 
                                     : null ;
 
-                if(String.isNotBlank(objsDisabled)){
+                if (String.isNotBlank(objsDisabled)){
                     Set<String> objSet = new Set<String>();
                     objSet.addAll(trimStringList(objsDisabled.split(GlobalConstants.COMMA)));
 
                     System.debug('** objSet ==>'+objSet);
 
-                    if(objSet.contains(objType) && custSettings.DisableTriggers__c){
+                    if (objSet.contains(objType) && custSettings.DisableTriggers__c){
                         isDisabled = true;
                     }
                 }

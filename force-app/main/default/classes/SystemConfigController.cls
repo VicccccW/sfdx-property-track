@@ -44,7 +44,7 @@ public with sharing class SystemConfigController {
 
         Database.SaveResult result = Database.update(newValue);
 
-        if(result.isSuccess()) {
+        if (result.isSuccess()) {
             System.debug('Success ');
             return new SystemConfigControllerResponse('Success', null);
         } else {

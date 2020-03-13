@@ -15,7 +15,7 @@ public without sharing class Uuid {
 
         // If the unformatted value isn't even the right length to be valid, then throw an exception
         // Subtract 4 because the UUID_V4_LENGTH includes 4 '-' characters in the UUID pattern
-        if(unformattedValue.length() != (UUID_V4_LENGTH - 4)) throw new UuidException(invalidValueError);
+        if (unformattedValue.length() != (UUID_V4_LENGTH - 4)) throw new UuidException(invalidValueError);
 
         // UUID Pattern: 8-4-4-4-12
         String formattedValue = unformattedValue.substring(0, 8)
@@ -26,14 +26,14 @@ public without sharing class Uuid {
 
         formattedValue = formattedValue.toLowerCase();
 
-        if(!Uuid.isValid(formattedValue)) throw new UuidException(invalidValueError);
+        if (!Uuid.isValid(formattedValue)) throw new UuidException(invalidValueError);
 
         return formattedValue;
     }
 
     public static Boolean isValid(String uuidValue) {
-        if(String.isBlank(uuidValue)) return false;
-        if(uuidValue.length() != UUID_V4_LENGTH) return false;
+        if (String.isBlank(uuidValue)) return false;
+        if (uuidValue.length() != UUID_V4_LENGTH) return false;
 
         Pattern uuidPattern = Pattern.compile(UUID_V4_REGEX.toLowerCase());
         Matcher uuidMatcher = uuidPattern.matcher(uuidValue.toLowerCase());
@@ -87,7 +87,7 @@ public without sharing class Uuid {
     private Integer convertHexToInteger(String hexValue) {
         hexValue = hexValue.toLowerCase();
 
-        if(hexValue.startsWith(HEX_PREFIX)) hexValue = hexValue.substringAfter(HEX_PREFIX);
+        if (hexValue.startsWith(HEX_PREFIX)) hexValue = hexValue.substringAfter(HEX_PREFIX);
 
         Integer integerValue = 0;
         for(String hexCharacter : hexValue.split('')) {

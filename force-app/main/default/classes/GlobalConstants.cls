@@ -32,6 +32,7 @@ global with sharing class GlobalConstants {
     public static final String PROPERTY_OBJECT_API = 'Property__c';
 
     public static final String HTTP_POST_METHOD = 'POST';
+    public static final String HTTP_GET_METHOD = 'GET';
     public static final String HTTP_CONTENT_TYPE = 'Content-Type';
     public static final String HTTP_CONTENT_TYPE_JSON_APP = 'application/json';
 

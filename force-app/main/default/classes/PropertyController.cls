@@ -71,13 +71,79 @@ global without sharing class PropertyController {
         }
     }
 
-    // public static void sendImportRequest() {
-        
-    // }
+    @AuraEnabled
+    public static PropertyControllerResponse sendImportRequest() {
 
+        PropertyControllerResponse importResponse = new PropertyControllerResponse();    
+
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(GlobalConstants.systemConfig.Property_Import_Endpoint__c);
+        request.setMethod(GlobalConstants.HTTP_GET_METHOD);
+        HttpResponse response = http.send(request);
+
+        if (response.getStatusCode() == 200) {
+            List<PropertyWrapper> results = (List<PropertyWrapper>)JSON.deserialize(response.getBody(), List<PropertyWrapper>.Class);
+            System.enqueueJob(new Queueable_UpsertImportProperty(results));
+
+            importResponse.status = '200';
+            importResponse.messages.add('Import Property Data Successfully.');
+        } else if (response.getStatusCode() == 404) {
+            importResponse.status = '404';
+            importResponse.messages.add('Incorrect endpoint!');
+        } else {
+            importResponse.status = '400';
+            importResponse.messages.add('Unknown error when import property data.');
+        }
+        
+        return importResponse;
+    }
+
+    public static void insertProperty(List<PropertyWrapper> data) {
+        if (data == null || data.size() == 0) return;
+            
+        List<Property__c> properties = new List<Property__c>();
+
+        for(PropertyWrapper oneData : data) {
+            Property__c property = new Property__c(
+                Est_Max_Price__c = Decimal.valueOf(oneData.estMaxPrice),
+                Est_Min_Price__c = Decimal.valueOf(oneData.estMinPrice),
+                Has_Sold__c = oneData.hasSold,
+                Land_Size__c = oneData.landSize,
+                Main_Image_URL__c = oneData.mainImageUrl,
+                Uuid__c = oneData.uuid,
+                Name__c = oneData.name,
+                No_of_Bathrooms__c = oneData.noOfBathrooms,
+                No_of_Rooms__c = oneData.noOfRooms,
+                Sold_Price__c = oneData.soldPrice
+            );
+
+            properties.add(property);
+        }
+
+        Schema.SObjectField uuid = Property__c.Uuid__c;
+        Database.UpsertResult[] upsertResult = Database.upsert(properties, uuid, false); 
+
+        for (Database.UpsertResult result : upsertResult) {
+            if (!result.isSuccess()) {
+                for (Database.Error err : result.getErrors()) {
+                    System.debug('Error: '+ err.getStatusCode() + ' ' + err.getMessage());
+                }
+            }
+        }
+    }
 
     //data structure to return 
     public class BackupPropertyWrapper {
         public List<Property__c> properties;
+    }
+
+    public class PropertyControllerResponse {
+        @AuraEnabled public String status;
+        @AuraEnabled public List<String> messages;
+
+        public PropertyControllerResponse() {
+            this.messages = new List<String>();
+        }
     }
 }

@@ -20,6 +20,9 @@
             ],
             "c/propertyMap": [
                 "propertyMap/propertyMap.js"
+            ],
+            "c/leaflet": [
+                "../staticresources/leaflet/leaflet.js"
             ]
         }
     },

@@ -4,6 +4,10 @@
         <application>Property_Management</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <applicationVisibilities>
+        <application>Property_Track_Console</application>
+        <visible>true</visible>
+    </applicationVisibilities>
     <fieldPermissions>
         <editable>true</editable>
         <field>Auction__c.Auction_Date__c</field>
@@ -51,11 +55,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Property__c.UUID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Property__c.Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -72,6 +71,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Property__c.Sold_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Property__c.UUID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
@@ -99,10 +103,14 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Property_Map</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Property__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
-        <tabSettings>
+    <tabSettings>
         <tab>Scratch_Org_Config</tab>
         <visibility>Visible</visibility>
     </tabSettings>

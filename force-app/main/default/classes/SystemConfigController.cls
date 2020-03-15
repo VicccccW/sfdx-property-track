@@ -21,14 +21,16 @@ public with sharing class SystemConfigController {
             Schema.DescribeFieldResult fieldResult = fieldToken.getDescribe();
         
             SystemConfigField oneSysConfigField = new SystemConfigField();
-           
+
             //use custom constructor to avoid 'Invalid constructor syntax, name=value pairs can only be used for SObjects' error
-            systemConfigFields.add(new SystemConfigField(
-                fieldResult.getName(), 
-                fieldResult.getLabel(), 
-                String.valueOf(orgDefaultSetting.get(fieldResult.getName())),
-                fieldResult.isCustom()
-                ));
+            SystemConfigField oneField = new SystemConfigField();
+            oneField.name = fieldResult.getName();
+            oneField.label = fieldResult.getLabel();
+            oneField.value = orgDefaultSetting != null && String.valueOf(orgDefaultSetting.get(fieldResult.getName())) != null 
+                           ? String.valueOf(orgDefaultSetting.get(fieldResult.getName()))
+                           : '';
+            oneField.isCustom = fieldResult.isCustom();
+            systemConfigFields.add(oneField);
         }
 
         return systemConfigFields;
@@ -42,7 +44,7 @@ public with sharing class SystemConfigController {
 
         System_Config__c newValue = (System_Config__c)System.JSON.deserialize(newSysConfigStr, System_Config__c.class);
 
-        Database.SaveResult result = Database.update(newValue);
+        Database.UpsertResult result = Database.upsert(newValue, System_Config__c.Id);
 
         if (result.isSuccess()) {
             System.debug('Success ');

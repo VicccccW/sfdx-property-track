@@ -11,8 +11,6 @@ export default class systemConfigSetting extends LightningElement {
   //if we want to change the custom setting value, we can create a copy and update that one
   systemConfigFields;
 
-  customSettingId;
-
   newSysConfigStr;
 
   @track hasCustomFields;
@@ -36,12 +34,9 @@ export default class systemConfigSetting extends LightningElement {
     if (this.hasCustomFields) {
       this.customFields = this.systemConfigFields.filter(el => el.isCustom === true);
     }
-
   }
 
   checkHasCustomFields() {
-    this.customSettingId = this.systemConfigFields.find(el => el.name === 'Id').value;
-    console.log('custom setting sf id is ' + this.customSettingId);
     this.hasCustomFields = this.systemConfigFields.some(el => el.isCustom === true);
   }
 
@@ -56,7 +51,6 @@ export default class systemConfigSetting extends LightningElement {
       this.template.querySelectorAll("input[name='fieldValueInput']").forEach(element => {
         element.removeAttribute("disabled", null)
       });
-
     });
   }
 
@@ -71,7 +65,6 @@ export default class systemConfigSetting extends LightningElement {
       this.template.querySelectorAll("input[name='fieldValueInput']").forEach(element => {
         element.setAttribute("disabled", null)
       });
-
     });
 
     this.buildNewSysConfigStr();
@@ -119,9 +112,13 @@ export default class systemConfigSetting extends LightningElement {
   }
 
   buildNewSysConfigStr() {
-    const newStrObj = {
-      Id: this.customSettingId
-    };
+    const newStrObj = {};
+
+    const orgDefaultId = this.systemConfigFields.find(el => el.name === 'Id').value;
+
+    if (orgDefaultId) {
+      newStrObj.Id = orgDefaultId;
+    }
 
     this.template.querySelectorAll("input[name='fieldValueInput']").forEach(el => {
       newStrObj[el.title] = el.value;

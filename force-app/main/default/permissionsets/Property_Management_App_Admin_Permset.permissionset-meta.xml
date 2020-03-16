@@ -35,6 +35,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Property__c.CountryCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Property__c.Country__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -85,7 +90,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Property__c.Postcode__c</field>
+        <field>Property__c.Postalcode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

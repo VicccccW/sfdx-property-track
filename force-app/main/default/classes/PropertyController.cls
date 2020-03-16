@@ -106,16 +106,25 @@ global without sharing class PropertyController {
 
         for(PropertyWrapper oneData : data) {
             Property__c property = new Property__c(
+                City__c = oneData.city,
+                Country__c = oneData.country,
+                CountryCode__c = oneData.countryCode,
                 Est_Max_Price__c = Decimal.valueOf(oneData.estMaxPrice),
                 Est_Min_Price__c = Decimal.valueOf(oneData.estMinPrice),
+                Geolocation__Latitude__s = Decimal.valueOf(oneData.latitude),
+                Geolocation__Longitude__s = Decimal.valueOf(oneData.longitude),
                 Has_Sold__c = oneData.hasSold,
                 Land_Size__c = oneData.landSize,
                 Main_Image_URL__c = oneData.mainImageUrl,
-                Uuid__c = oneData.uuid,
                 Name__c = oneData.name,
                 No_of_Bathrooms__c = oneData.noOfBathrooms,
                 No_of_Rooms__c = oneData.noOfRooms,
-                Sold_Price__c = oneData.soldPrice
+                Postalcode__c = oneData.postalcode,
+                Sold_Price__c = oneData.soldPrice,
+                State__c = oneData.state,
+                Street__c = oneData.street,
+                Suburb__c = oneData.suburb,
+                Uuid__c = oneData.uuid
             );
 
             properties.add(property);
@@ -131,6 +140,28 @@ global without sharing class PropertyController {
                 }
             }
         }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<Property__c> getMapPropertyList() {
+        return [SELECT Id
+                        , Est_Max_Price__c
+                        , Est_Min_Price__c
+                        , Land_Size__c
+                        , No_of_Rooms__c
+                        , No_of_Bathrooms__c
+                        , Name__c
+                        , Postalcode__c
+                        , Street__c
+                        , City__c
+                        , Suburb__c
+                        , Country__c
+                        , CountryCode__c
+                        , Geolocation__Latitude__s
+                        , Geolocation__Longitude__s 
+                FROM Property__c
+                ORDER BY LastModifiedDate DESC 
+                LIMIT 100];
     }
 
     //data structure to return 

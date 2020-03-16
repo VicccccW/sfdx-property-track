@@ -16,6 +16,7 @@ public with sharing class PropertyTriggerHandler{
         //Logic to fire in 'before' context 
         if (Trigger.isInsert) {
             helper.generateUuid(Trigger.new);
+            helper.formatPropertyName(Trigger.new);
         }
     }
 }

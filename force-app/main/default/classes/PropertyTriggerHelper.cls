@@ -11,4 +11,12 @@ public with sharing class PropertyTriggerHelper {
             }
         }
     }
+
+    public void formatPropertyName(List<Property__c> newProperties) {
+        for(Property__c property : newProperties) {
+            if(property.Street__c != null && property.Suburb__c != null) {
+                property.Name__c = property.Street__c + ', ' + property.Suburb__c;
+            }
+        }
+    }
 }

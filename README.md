@@ -6,6 +6,18 @@ sfdx force:source:deploy -p force-app/main/default -u xxx
 force-app/main/default/classes/Schedule_BackupProperty.cls  
 You can bypass this error by allowing deployments with Apex jobs in the Deployment Settings page in Setup.
 
+generate password
+sfdx force:user:password:generate --targetusername $scratch_org_username
+
+get password
+sfdx force:org:display --verbose --targetusername $org_username --json
+
+bulk create fields
+<https://fieldcreator.herokuapp.com/>
+
+find geolocation
+<https://www.latlong.net/convert-address-to-lat-long.html>
+
 ## Implementing OAuth 2.0 JWT Bearer Flow to authenticate to scratch orgs
 
 1. create a Self-Signed SSL certificate and private key
@@ -29,4 +41,4 @@ You can bypass this error by allowing deployments with Apex jobs in the Deployme
 4. login to Scratch Org using sfdx force:auth:jwt:grant --clientid [YOUR_CONSUMER_KEY] \
     --username [YOUR_SCRATCHORG_USERNAME] \
     --jwtkeyfile ~/.certs/server.key \
-    --instanceurl https://test.salesforce.com
+    --instanceurl <https://test.salesforce.com>

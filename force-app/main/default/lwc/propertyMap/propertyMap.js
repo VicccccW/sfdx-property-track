@@ -97,17 +97,20 @@ export default class PropertyMap extends NavigationMixin(LightningElement) {
     // return locationList;
   }
 
+  //TODO: implement a pop up to ask user if need to redirect to record page in this session
   handleMarkerSelect(event) {
     setTimeout(this.openNewSubTab, 1500, this, event.target.selectedMarkerValue);
   }
 
   openNewSubTab(that, id) {
+    if (id !== undefined && id !== null) {
       that[NavigationMixin.Navigate]({
-          type: 'standard__recordPage',
-          attributes: {
-              recordId: id,
-              actionName: 'view'
-          }
+        type: 'standard__recordPage',
+        attributes: {
+          recordId: id,
+          actionName: 'view'
+        }
       });
+    }
   }
 }

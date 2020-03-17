@@ -3,26 +3,23 @@
         "experimentalDecorators": true,
         "baseUrl": ".",
         "paths": {
-            "c/propertySearch": [
-                "propertySearch/propertySearch.js"
-            ],
             "c/dataImportButton": [
                 "dataImportButton/dataImportButton.js"
-            ],
-            "c/systemConfigSetting": [
-                "systemConfigSetting/systemConfigSetting.js"
             ],
             "c/idsUtils": [
                 "idsUtils/idsUtils.js"
             ],
-            "c/pubsub": [
-                "pubsub/pubsub.js"
-            ],
             "c/propertyMap": [
                 "propertyMap/propertyMap.js"
             ],
-            "c/leaflet": [
-                "../staticresources/leaflet/leaflet.js"
+            "c/propertySearch": [
+                "propertySearch/propertySearch.js"
+            ],
+            "c/pubsub": [
+                "pubsub/pubsub.js"
+            ],
+            "c/systemConfigSetting": [
+                "systemConfigSetting/systemConfigSetting.js"
             ]
         }
     },

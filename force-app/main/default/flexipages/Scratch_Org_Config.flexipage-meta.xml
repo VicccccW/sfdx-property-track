@@ -7,6 +7,9 @@
         <componentInstances>
             <componentName>systemConfigSetting</componentName>
         </componentInstances>
+        <componentInstances>
+            <componentName>systemSwtichSetting</componentName>
+        </componentInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enable_Map_Marker_Select_Redirect__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <label>Enable Map Marker Select Redirect</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

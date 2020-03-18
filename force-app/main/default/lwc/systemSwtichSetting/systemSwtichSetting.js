@@ -1,17 +1,16 @@
 import { LightningElement, wire, track } from 'lwc';
-import getSystemConfigFields from '@salesforce/apex/SystemConfigController.getSystemConfigFields';
-import setSystemConfigFields from '@salesforce/apex/SystemConfigController.setSystemConfigFields';
-import createRemoteSiteSettings from '@salesforce/apex/RemoteSiteSettingController.createRemoteSiteSettings';
+import getSystemSwitchFields from '@salesforce/apex/SystemSwitchController.getSystemSwitchFields';
+import setSystemSwitchFields from '@salesforce/apex/SystemSwitchController.setSystemSwitchFields';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { reduceErrors } from 'c/idsUtils';
 
-export default class systemConfigSetting extends LightningElement {
+export default class systemSwitchSetting extends LightningElement {
 
   //DO NOT mark to @api or @track as we want this property immutable
   //if we want to change the custom setting value, we can create a copy and update that one
-  systemConfigFields;
+  systemSwitchFields;
 
-  newSysConfigStr;
+  newSysSwitchStr;
 
   @track hasCustomFields;
 
@@ -19,25 +18,25 @@ export default class systemConfigSetting extends LightningElement {
 
   @track error;
 
-  @wire(getSystemConfigFields)
-  wiredSystemConfigFields(result) {
+  @wire(getSystemSwitchFields)
+  wiredSystemSwitchFields(result) {
     if (result.data) {
-      this.systemConfigFields = result.data;
+      this.systemSwitchFields = result.data;
       this.error = undefined;
       this.checkHasCustomFields();
     } else if (result.error) {
-      this.systemConfigFields = undefined;
+      this.systemSwitchFields = undefined;
       this.error = result.error;
       this.hasCustomFields = false;
     }
 
     if (this.hasCustomFields) {
-      this.customFields = this.systemConfigFields.filter(el => el.isCustom === true);
+      this.customFields = this.systemSwitchFields.filter(el => el.isCustom === true);
     }
   }
 
   checkHasCustomFields() {
-    this.hasCustomFields = this.systemConfigFields.some(el => el.isCustom === true);
+    this.hasCustomFields = this.systemSwitchFields.some(el => el.isCustom === true);
   }
 
   handleEdit(event) {
@@ -47,10 +46,11 @@ export default class systemConfigSetting extends LightningElement {
       } else if (element.name === "SaveBtn") {
         element.removeAttribute("disabled", null);
       }
+    });
 
-      this.template.querySelectorAll("input[name='fieldValueInput']").forEach(element => {
-        element.removeAttribute("disabled", null)
-      });
+
+    this.template.querySelectorAll("c-system-switch-setting-field").forEach(element => {
+      element.enabledEdit();
     });
   }
 
@@ -63,26 +63,26 @@ export default class systemConfigSetting extends LightningElement {
       }
     });
 
-    this.template.querySelectorAll("input[name='fieldValueInput']").forEach(element => {
-      element.setAttribute("disabled", null)
+    this.template.querySelectorAll("c-system-switch-setting-field").forEach(element => {
+      element.disabledEdit();
     });
 
-    this.buildNewSysConfigStr();
+    this.buildNewSysSwitchStr();
 
-    setSystemConfigFields({ newSysConfigStr : this.newSysConfigStr })
+    setSystemSwitchFields({ newSysSwitchStr : this.newSysSwitchStr })
       .then(result => {
         if (result.status === 'Success') {
           this.dispatchEvent(
             new ShowToastEvent({
               title: 'Success',
-              message: 'Update SystemConfig setting Successlly!',
+              message: 'Update SystemSwitch setting Successlly!',
               variant: 'success'
             })
           );
         } else if (result.status === 'Error') {
           this.dispatchEvent(
             new ShowToastEvent({
-              title: 'Error updating SystemConfig setting.',
+              title: 'Error updating SystemSwitch setting.',
               message: result.messages.join(', '),
               variant: 'error'
             })
@@ -92,42 +92,33 @@ export default class systemConfigSetting extends LightningElement {
       .catch(error => {
         this.dispatchEvent(
           new ShowToastEvent({
-            title: 'Error updating SystemConfig setting.',
+            title: 'Error updating SystemSwitch setting.',
             message: reduceErrors(error).join(', '),
             variant: 'error'
           })
         );
       });
-
-      const remoteSiteUrl = this.template.querySelector("input[title='Property_Backup_Endpoint__c']").value;
-
-      createRemoteSiteSettings({ siteUrl : remoteSiteUrl})
-      .then(result => {
-        console.log("Updated remote site.");
-        console.log(result);
-      })
-      .catch(error => {
-        console.log("Error when create remote site.");
-      })
   }
 
-  buildNewSysConfigStr() {
+  buildNewSysSwitchStr() {
     const newStrObj = {};
 
-    const orgDefaultId = this.systemConfigFields.find(el => el.name === 'Id').value;
+    const orgDefaultId = this.systemSwitchFields.find(el => el.name === 'Id').value;
 
     if (orgDefaultId) {
       newStrObj.Id = orgDefaultId;
     }
 
-    this.template.querySelectorAll("input[name='fieldValueInput']").forEach(el => {
-      newStrObj[el.title] = el.value;
+    console.log('123');
+
+    this.template.querySelectorAll("c-system-switch-setting-field").forEach(el => {
+      newStrObj[el.getTitle()] = el.value.toString();
     });
 
     console.log('return obj to Apex');
     console.log(newStrObj);
 
-    //format should be '{"Id": "a02N000000JJJ8dIAH", "Property_Backup_Scan_Range_Days__c": "10"}'
-    this.newSysConfigStr = JSON.stringify(newStrObj);
+    //format should be '{"Id": "a02N000000JJJ8dIAH", "xxx": "true"}'
+    this.newSysSwitchStr = JSON.stringify(newStrObj);
   }
 }

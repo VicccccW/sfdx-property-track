@@ -20,6 +20,12 @@
             ],
             "c/systemConfigSetting": [
                 "systemConfigSetting/systemConfigSetting.js"
+            ],
+            "c/systemSwtichSetting": [
+                "systemSwtichSetting/systemSwtichSetting.js"
+            ],
+            "c/systemSwitchSettingField": [
+                "systemSwitchSettingField/systemSwitchSettingField.js"
             ]
         }
     },

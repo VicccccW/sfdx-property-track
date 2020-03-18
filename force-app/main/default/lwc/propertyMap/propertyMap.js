@@ -1,6 +1,7 @@
 import { LightningElement, track, wire } from 'lwc';
 import getMapPropertyList from '@salesforce/apex/PropertyController.getMapPropertyList';
 import { NavigationMixin } from 'lightning/navigation';
+import getOrgDefaultMapMarkerRedirect from '@salesforce/apex/SystemSwitchController.getOrgDefaultMapMarkerRedirect';
 
 export default class PropertyMap extends NavigationMixin(LightningElement) {
 
@@ -28,6 +29,8 @@ export default class PropertyMap extends NavigationMixin(LightningElement) {
 
   @track selectedMarkerValue;
 
+  @track enableMapMarkerRedirect;
+
   constructor() {
     super();
     this.initMap();
@@ -41,6 +44,8 @@ export default class PropertyMap extends NavigationMixin(LightningElement) {
   //The function is invoked whenever a value is available, which can be before or after the component is connected or rendered.
   @wire(getMapPropertyList)
   wiredPropertyList(result) {
+    //maybe can use renderedcalback refine these code
+    //https://jdspaceit.wordpress.com/2019/02/27/wired-property-from-an-apex-method/
     if (result === undefined) {
       this.mapMarkers = undefined;
       this.error = 'No property available.';
@@ -52,6 +57,18 @@ export default class PropertyMap extends NavigationMixin(LightningElement) {
       this.mapMarkers = undefined;
       this.error = result.error;
     }
+  }
+
+  getMapMarkerRedirect() {
+    getOrgDefaultMapMarkerRedirect()
+    .then(result => {
+      this.enableMapMarkerRedirect = result;
+      this.error = undefined;
+    })
+    .catch(error => {
+      this.enableMapMarkerRedirect = undefined;
+      this.error = error;
+    });
   }
 
   buildMapMarkers(propertyList) {
@@ -97,13 +114,17 @@ export default class PropertyMap extends NavigationMixin(LightningElement) {
     // return locationList;
   }
 
+  renderedCallback() {
+    this.getMapMarkerRedirect();
+  }
+
   //TODO: implement a pop up to ask user if need to redirect to record page in this session
   handleMarkerSelect(event) {
     setTimeout(this.openNewSubTab, 1500, this, event.target.selectedMarkerValue);
   }
 
   openNewSubTab(that, id) {
-    if (id !== undefined && id !== null) {
+    if (that.enableMapMarkerRedirect && id !== undefined && id !== null) {
       that[NavigationMixin.Navigate]({
         type: 'standard__recordPage',
         attributes: {

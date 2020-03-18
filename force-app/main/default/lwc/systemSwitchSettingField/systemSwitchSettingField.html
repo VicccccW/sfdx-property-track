@@ -1,0 +1,34 @@
+<template>
+    <lightning-layout>
+        <!-- each nested layout item has another nest layout with 2 column, left one is field label, right one is field value (input field) -->
+        <lightning-layout-item size="6" flexibility="auto" padding="horizontal-medium">
+            <div class="custom-box slds-box_x-small slds-text-align_right">{field.label}</div>
+        </lightning-layout-item>
+
+        <template if:true={isStringType}>
+            <lightning-layout-item size="6" flexibility="auto" padding="horizontal-medium">
+                <div class="custom-box slds-box_x-small slds-text-align_left">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <input type="text" data-name="fieldValueInput" title={title} class="slds-input" value={field.value} disabled onchange={handleInputChange}/>
+                        </div>
+                    </div>
+                </div>
+            </lightning-layout-item>
+        </template>
+
+        <template if:true={isBooleanType}>
+            <lightning-layout-item size="6" flexibility="auto" padding="horizontal-medium">
+                <div class="custom-box slds-box_x-small slds-text-align_left">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <lightning-input type="checkbox" data-name="fieldValueInput" title={field.name} value={field.value} disabled onchange={handleInputChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </lightning-layout-item>
+        </template>
+
+    </lightning-layout>
+</template>

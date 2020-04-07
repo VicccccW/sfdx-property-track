@@ -69,7 +69,7 @@ export default class systemSwitchSetting extends LightningElement {
 
     this.buildNewSysSwitchStr();
 
-    setSystemSwitchFields({ newSysSwitchStr : this.newSysSwitchStr })
+    setSystemSwitchFields({ newSysSwitchStr: this.newSysSwitchStr })
       .then(result => {
         if (result.status === 'Success') {
           this.dispatchEvent(
@@ -108,8 +108,6 @@ export default class systemSwitchSetting extends LightningElement {
     if (orgDefaultId) {
       newStrObj.Id = orgDefaultId;
     }
-
-    console.log('123');
 
     this.template.querySelectorAll("c-system-switch-setting-field").forEach(el => {
       newStrObj[el.getTitle()] = el.value.toString();

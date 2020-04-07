@@ -69,7 +69,7 @@ export default class systemConfigSetting extends LightningElement {
 
     this.buildNewSysConfigStr();
 
-    setSystemConfigFields({ newSysConfigStr : this.newSysConfigStr })
+    setSystemConfigFields({ newSysConfigStr: this.newSysConfigStr })
       .then(result => {
         if (result.status === 'Success') {
           this.dispatchEvent(
@@ -99,9 +99,9 @@ export default class systemConfigSetting extends LightningElement {
         );
       });
 
-      const remoteSiteUrl = this.template.querySelector("input[title='Property_Backup_Endpoint__c']").value;
+    const remoteSiteUrl = this.template.querySelector("input[title='Property_Backup_Endpoint__c']").value;
 
-      createRemoteSiteSettings({ siteUrl : remoteSiteUrl})
+    createRemoteSiteSettings({ siteUrl: remoteSiteUrl })
       .then(result => {
         console.log("Updated remote site.");
         console.log(result);

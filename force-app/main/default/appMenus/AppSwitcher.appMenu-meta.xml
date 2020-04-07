@@ -72,4 +72,8 @@
         <name>Property_Track_Console</name>
         <type>CustomApplication</type>
     </appMenuItems>
+    <appMenuItems>
+        <name>react_nodejs_property_track</name>
+        <type>ConnectedApp</type>
+    </appMenuItems>
 </AppMenu>

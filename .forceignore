@@ -2,8 +2,11 @@
 # More information: https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_exclude_source.htm
 #
 
-# ignore profiles when push and pull
-force-app/main/default/profiles
+# ignore unsupported metadata 
+**profiles
+**appMenus
+**connectedApp
+
 
 package.xml
 

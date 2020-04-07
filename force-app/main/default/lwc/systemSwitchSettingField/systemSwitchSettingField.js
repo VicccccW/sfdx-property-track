@@ -6,17 +6,31 @@ export default class SystemSwitchSettingField extends LightningElement {
 
   @api value;
 
-  _fieldType
+  _fieldType;
 
   connectedCallback() {
-    //if there is no org default setting, will receive json parse error
-    //maybe lwc recommend pass primitive type, not object type
+    //https://stackoverflow.com/questions/46613243/uncaught-syntaxerror-unexpected-token-u-in-json-at-position-0
     //console.log('before convert field');
     //console.log(JSON.stringify(this.field));
     this.field = JSON.parse(JSON.stringify(this.field));
     //console.log('after convert field');
     //console.log(this.field);
     this.setFieldType();
+  }
+
+  renderedCallback() {
+    if (this._fieldType === "CHECKBOX") {
+      //IMPORTANT, HOW TO RENDER CHECKBOX IN LIGHTING-INPUT ELEMENT
+      const checkboxEl = this.template.querySelector("lightning-input[data-name='fieldValueInput']");
+
+      //check if there is an org default setting
+      if (this.field.value) {
+        checkboxEl.checked = JSON.parse(this.field.value);
+        checkboxEl.value = JSON.parse(this.field.value);
+      }
+    }
+
+    this.value = this.field.value;
   }
 
   setFieldType() {
@@ -33,17 +47,6 @@ export default class SystemSwitchSettingField extends LightningElement {
 
   get isStringType() {
     return this._fieldType.toUpperCase() === "STRING";
-  }
-
-  renderedCallback() {
-    if (this._fieldType === "CHECKBOX") {
-      //IMPORTANT, HOW TO RENDER CHECKBOX IN LIGHTING-INPUT ELEMENT
-      const checkboxEl = this.template.querySelector("lightning-input[data-name='fieldValueInput']");
-      checkboxEl.checked = JSON.parse(this.field.value);
-      checkboxEl.value = JSON.parse(this.field.value);
-    }
-
-    this.value = this.field.value;
   }
 
   @api enabledEdit() {

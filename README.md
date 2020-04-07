@@ -18,6 +18,9 @@ bulk create fields
 find geolocation
 <https://www.latlong.net/convert-address-to-lat-long.html>
 
+create new package version
+sfdx force:package:version:create -p "Property Track" -d force-app -k vicccccw --wait 10 -v DEVHUB_Property_Track -f config/project-scratch-def.json
+
 ## Implementing OAuth 2.0 JWT Bearer Flow to authenticate to scratch orgs
 
 1. create a Self-Signed SSL certificate and private key
@@ -52,3 +55,8 @@ find geolocation
 - import data
 
 ## for CICD
+
+## for create package and package version
+
+- check metadata converage
+- check apiVersion

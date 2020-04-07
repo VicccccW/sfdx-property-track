@@ -5,10 +5,12 @@
     <label>react-nodejs-property-track</label>
     <logoUrl>https://login.salesforce.com/logos/Salesforce/Salesforce/logo.png</logoUrl>
     <oauthConfig>
-        <callbackUrl>http://localhost:3000/api/auth/callback</callbackUrl>
-        <isAdminApproved>false</isAdminApproved>
+        <callbackUrl>https://property-track-stg.herokuapp.com/api/auth/callback</callbackUrl>
+        <isAdminApproved>true</isAdminApproved>
         <scopes>Basic</scopes>
         <scopes>Api</scopes>
         <scopes>Web</scopes>
+        <scopes>RefreshToken</scopes>
     </oauthConfig>
+    <permissionSetName>Property Management App Admin Permset</permissionSetName>
 </ConnectedApp>

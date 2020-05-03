@@ -10,9 +10,26 @@
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>Property Track Console</label>
     <navType>Console</navType>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Property_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Property__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Property_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Property__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>Property_Map</tabs>
     <tabs>Property__c</tabs>
+    <tabs>Inspection__c</tabs>
     <tabs>Auction__c</tabs>
     <tabs>standard-Feed</tabs>
     <tabs>standard-File</tabs>
@@ -25,6 +42,9 @@
         <mappings>
             <fieldName>Property__c</fieldName>
             <tab>Auction__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Inspection__c</tab>
         </mappings>
         <mappings>
             <tab>Property_Map</tab>

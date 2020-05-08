@@ -9,6 +9,8 @@ public with sharing class PropertyTriggerHandler{
         // Check for event type of trigger
         if (Trigger.isBefore) {
             beforeHandler();        // invoke of before handler
+        } else if (Trigger.isAfter) {
+            afterHandler();
         }
     }
 
@@ -17,6 +19,28 @@ public with sharing class PropertyTriggerHandler{
         if (Trigger.isInsert) {
             helper.generateUuid(Trigger.new);
             helper.formatPropertyName(Trigger.new);
+        } 
+        
+        if (Trigger.isUpdate) {
+            helper.formatPropertyName(Trigger.new);
+        }
+    }
+
+    private static void afterHandler() {
+        if (Trigger.isInsert) {
+            helper.publishPlatformEvent(Trigger.new);
+        }
+
+        if (Trigger.isUpdate) {
+            helper.publishPlatformEvent(Trigger.new);
+        }
+
+        if (Trigger.isDelete) {
+            helper.publishPlatformEvent(Trigger.old);
+        }
+
+        if (Trigger.isUndelete) {
+            helper.publishPlatformEvent(Trigger.new);
         }
     }
 }

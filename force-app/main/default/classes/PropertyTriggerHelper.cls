@@ -19,4 +19,36 @@ public with sharing class PropertyTriggerHelper {
             }
         }
     }
+
+    public void publishPlatformEvent(List<Property__c> properties) {
+
+        // List<SF_Property_Event__e> events = new List<SF_Property_Event__e>();
+        SF_Property_Event__e event = new SF_Property_Event__e(
+            Number_Of_Records__c = properties.size()
+        );
+
+        if(Trigger.isInsert) {
+            event.Event_Type__c = 'INSERTED';
+        } else if(Trigger.isUpdate) {
+            event.Event_Type__c = 'UPDATED';
+        } else if(Trigger.isDelete) {
+            event.Event_Type__c = 'DELETED';
+        } else if(Trigger.isUndelete) {
+            event.Event_Type__c = 'UNDELETED';
+        }
+
+        Database.SaveResult sr = EventBus.publish(event);
+        
+        // Inspect publishing result 
+        if (sr.isSuccess()) {
+            System.debug('Successfully published event.');
+        } else {
+            for(Database.Error err : sr.getErrors()) {
+                System.debug('Error returned: ' +
+                             err.getStatusCode() +
+                             ' - ' +
+                             err.getMessage());
+            }
+        }
+    }
 }
